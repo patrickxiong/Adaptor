@@ -6,18 +6,14 @@ namespace Adapter
     {
         void Connect();
         void Disconnect();
-
-        void ValidateUser();
+        void ValidateUser(string userId, string password);
         void Login(string userId, string extension, string campaign);
         void Available();
         void Unavailable();
         void Logout();
-
         void MakeCall(string phoneNumber);
         void HangUp();
-
         void TransactionComplete(int outcome);
         void Callback(DateTime callDateTime);
-
     }
 }

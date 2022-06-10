@@ -8,7 +8,7 @@ namespace Workshop2022.API.Connector
     public class ErrorResponse
     {
         public int ErrorCode { get; set; }
-        public int ErrorMessage { get; set; }
+        public string ErrorMessage { get; set; }
 
     }
 

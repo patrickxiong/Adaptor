@@ -5,7 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+<<<<<<< Updated upstream
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.1" />
+=======
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
+>>>>>>> Stashed changes
   </ItemGroup>
 
   <ItemGroup>
