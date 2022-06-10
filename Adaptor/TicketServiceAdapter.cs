@@ -2,11 +2,13 @@
 
 namespace Adapter
 {
-    public class TicketServiceAdapter
+    public class TicketServiceAdapter: ITicketServiceAdapter
     {
-        public TicketServiceAdapter(SessionManager sessionManager)
-        {
+        private readonly ITicketManager _ticketManager;
 
+        public TicketServiceAdapter(SessionManager sessionManager, ITicketManager ticketManager)
+        {
+            _ticketManager = ticketManager;
         }
 
         public string CreateSession()
@@ -16,14 +18,11 @@ namespace Adapter
             return sessionToken;
         }
 
-        public void ReleaseSession(string SessionToken)
+        public void ReleaseSession(string sessionToken)
         {
 
         }
 
-        public void Login(string SessionToken,string UserId,string Password)
-        {
-
-        }
+        public void Login(string sessionToken,string userId,string password) => _ticketManager.Login(sessionToken, userId, password);
     }
 }

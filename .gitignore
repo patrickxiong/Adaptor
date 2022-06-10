@@ -1,0 +1,13 @@
+/.vs
+*.user
+/API/bin
+/API/obj
+/Adaptor/bin
+/Adaptor/obj
+/Model/bin
+/Model/obj
+
+/Service/bin
+
+/Service/obj
+/API/.config
