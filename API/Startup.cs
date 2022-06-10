@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Workshop2022.API.Connector;
+using Workshop2022.TicketServiceClient;
 
 namespace Workshop2022
 {
@@ -27,6 +27,7 @@ namespace Workshop2022
             ));
 
             services.AddControllers();
+            services.AddTransient<ITicketServiceClient, Workshop2022.TicketServiceClient.TicketServiceClient>();
             services.AddTransient<Session>();
             services.AddSingleton<ITicketManager, TicketManager>();
             services.AddSingleton<ISessionManager,SessionManager>();

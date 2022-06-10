@@ -1,0 +1,10 @@
+C:\Aristocrat\Adapter\TicketServiceClient\bin\Debug\netcoreapp3.1\TicketServiceClient.deps.json
+C:\Aristocrat\Adapter\TicketServiceClient\bin\Debug\netcoreapp3.1\TicketServiceClient.dll
+C:\Aristocrat\Adapter\TicketServiceClient\bin\Debug\netcoreapp3.1\TicketServiceClient.pdb
+C:\Aristocrat\Adapter\TicketServiceClient\obj\Debug\netcoreapp3.1\TicketServiceClient.csproj.AssemblyReference.cache
+C:\Aristocrat\Adapter\TicketServiceClient\obj\Debug\netcoreapp3.1\TicketServiceClient.GeneratedMSBuildEditorConfig.editorconfig
+C:\Aristocrat\Adapter\TicketServiceClient\obj\Debug\netcoreapp3.1\TicketServiceClient.AssemblyInfoInputs.cache
+C:\Aristocrat\Adapter\TicketServiceClient\obj\Debug\netcoreapp3.1\TicketServiceClient.AssemblyInfo.cs
+C:\Aristocrat\Adapter\TicketServiceClient\obj\Debug\netcoreapp3.1\TicketServiceClient.csproj.CoreCompileInputs.cache
+C:\Aristocrat\Adapter\TicketServiceClient\obj\Debug\netcoreapp3.1\TicketServiceClient.dll
+C:\Aristocrat\Adapter\TicketServiceClient\obj\Debug\netcoreapp3.1\TicketServiceClient.pdb

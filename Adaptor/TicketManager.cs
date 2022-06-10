@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Text;
-using Workshop2022.API.Connector;
 using Workshop2022.API.Models;
+using Workshop2022.TicketServiceClient;
 
 namespace Adapter
 {
