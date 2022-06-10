@@ -13,6 +13,6 @@ namespace Adapter
         public string UserId { get; set; }
         public string Campaign { get; set; }
         public UserState State { get; set; }
-        public ConcurrentQueue<EventBase> OutEvents = new ConcurrentQueue<EventBase>();
+        public TicketManager TicketManager { get; set; }
     }
 }
