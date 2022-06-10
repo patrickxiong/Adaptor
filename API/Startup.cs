@@ -26,6 +26,7 @@ namespace Workshop2022
             ));
 
             services.AddControllers();
+            services.AddSingleton<ITicketManager, TicketManager>();
             services.AddSingleton<ISessionManager,SessionManager>();
             services.AddSingleton<ITicketServiceAdapter,TicketServiceAdapter>();
         }
