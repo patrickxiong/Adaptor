@@ -2,7 +2,7 @@
 
 namespace Adapter
 {
-    public class TicketServiceAdapter: ITicketServiceAdapter
+    public class TicketServiceAdapter : ITicketServiceAdapter
     {
         private readonly ITicketManager _ticketManager;
         private readonly ISessionManager _sessionManager;
@@ -17,11 +17,35 @@ namespace Adapter
 
         public void ReleaseSession(string sessionToken) => _sessionManager.ReleaseSession(sessionToken);
 
-        public void Login(string sessionToken,string userId,string password) => _ticketManager.Login(sessionToken, userId, password);
+        public void Login(string sessionToken, string userId, string password) => _ticketManager.Login(sessionToken, userId, password);
 
         public EventBase GetEvents(string sessionToken, string campaign, string user)
         {
             return default;
+        }
+
+        public void RequestLogout(string sessionToken, string campaign, string user)
+        {
+
+        }
+
+        public void Resume(string sessionToken, string campaign, string user)
+        {
+
+        }
+
+        public void RequestBreak(string sessionToken, string campaign, string user)
+        {
+
+        }
+
+        public void SubmitOutcome(string sessionToken, string campaign, string user, string outcome)
+        {
+        }
+
+        public void HangUp(string sessionToken, string campaign, string user)
+        {
+
         }
     }
 }
