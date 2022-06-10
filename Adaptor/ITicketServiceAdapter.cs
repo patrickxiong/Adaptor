@@ -6,6 +6,6 @@
 
         void ReleaseSession(string modelSessionToken);
 
-        string CreateSession(string user);
+        string CreateSession(Session session);
     }
 }

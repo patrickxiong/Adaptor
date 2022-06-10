@@ -2,7 +2,7 @@
 {
     public interface ISessionManager
     {
-        string CreateSession();
+        void AddSession(Session session);
 
         void ReleaseSession(string sessionToken);
     }

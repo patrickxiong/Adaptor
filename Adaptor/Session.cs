@@ -13,7 +13,14 @@ namespace Adapter
         public string UserId { get; set; }
         public string Campaign { get; set; }
         public UserState State { get; set; }
-        public TicketManager TicketManager { get; set; }
+        public ITicketManager TicketManager { get; set; }
+
+        public Session(ITicketManager ticketManager)
+        {
+            TicketManager = ticketManager;
+            SessionToken = Guid.NewGuid().ToString();
+            State = UserState.SessionCreated;
+        }
 
         public void Dispose()
         {

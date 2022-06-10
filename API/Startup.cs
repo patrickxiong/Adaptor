@@ -26,8 +26,8 @@ namespace Workshop2022
             ));
 
             services.AddControllers();
-            services.AddSingleton<SessionManager>();
-            services.AddSingleton<TicketServiceAdapter>();
+            services.AddSingleton<ISessionManager,SessionManager>();
+            services.AddSingleton<ITicketServiceAdapter,TicketServiceAdapter>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

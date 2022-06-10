@@ -14,12 +14,14 @@ namespace Workshop2022.API.Controllers
 
         private readonly ILogger<CommandApiController> _logger;
         private readonly ITicketServiceAdapter _ticketServiceAdapter;
+        private readonly ISessionManager _sessionManager;
 
 
-        public CommandApiController(ILogger<CommandApiController> logger, ITicketServiceAdapter ticketServiceAdapter)
+        public CommandApiController(ILogger<CommandApiController> logger, ITicketServiceAdapter ticketServiceAdapter, ISessionManager sessionManager)
         {
             _logger = logger;
             _ticketServiceAdapter = ticketServiceAdapter;
+            _sessionManager = sessionManager;
         }
 
 
@@ -32,7 +34,7 @@ namespace Workshop2022.API.Controllers
 
         [HttpPost]
         [Route("session-create")]
-        public IActionResult CreateSession(SessionCreateRequest model)
+        public IActionResult CreateSession(SessionCreateRequest model, Session session)
         {
             var generatedToken = _ticketServiceAdapter.CreateSession(model.User);
             var result = new SessionCreateResponse
@@ -137,7 +139,7 @@ namespace Workshop2022.API.Controllers
         public IActionResult PollEvent(PollEventRequest model)
         {
 
-            // -- add code as needed
+            
 
 
             // retrieves and return queued events

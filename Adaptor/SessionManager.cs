@@ -7,17 +7,9 @@ namespace Adapter
     {
         private Dictionary<string, Session> _sessions = new Dictionary<string, Session>();
 
-        public string CreateSession()
+        public void AddSession(Session session)
         {
-            var sessionToken = Guid.NewGuid().ToString();
-            var session = new Session
-            {
-                SessionToken = sessionToken
-            };
-
-            _sessions.Add(sessionToken, session);
-
-            return sessionToken;
+            _sessions.Add(session.SessionToken, session);
         }
 
         public Session GetSession(string sessionToken)
