@@ -14,11 +14,17 @@ namespace Adapter
         public ConcurrentQueue<EventBase> OutEvents = new ConcurrentQueue<EventBase>();
 
         private Session _session;
-        private ITicketServiceClient _ticketServiceClient;
 
-        public TicketManager(Session session, ITicketServiceClient ticketServiceClient)
+        public Session Session
         {
-            _session = session;
+            get => _session;
+            set => _session = value;
+        }
+
+        private readonly ITicketServiceClient _ticketServiceClient;
+
+        public TicketManager(ITicketServiceClient ticketServiceClient)
+        {
             _ticketServiceClient = ticketServiceClient;
 
             SubscribeToEvents();

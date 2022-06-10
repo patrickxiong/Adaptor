@@ -18,6 +18,7 @@ namespace Adapter
         public Session(ITicketManager ticketManager)
         {
             TicketManager = ticketManager;
+            TicketManager.Session = this;
             SessionToken = Guid.NewGuid().ToString();
             State = UserState.SessionCreated;
         }

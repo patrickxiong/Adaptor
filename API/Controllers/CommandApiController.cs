@@ -69,7 +69,7 @@ namespace Workshop2022.API.Controllers
         {
 
             // -- add code as needed
-
+            
             return Ok();
         }
 
@@ -78,9 +78,7 @@ namespace Workshop2022.API.Controllers
         [Route("hangup")]
         public IActionResult HangUp(HangUpRequest model)
         {
-
-            // -- add code as needed
-
+            _ticketServiceAdapter.HangUp(model.SessionToken,model.SessionToken,model.User);
             return Ok();
         }
 

@@ -4,6 +4,7 @@ namespace Adapter
 {
     public interface ITicketManager
     {
+        Session Session { get; set; }
         void Connect();
         void Disconnect();
         void ValidateUser(string userId, string password);
