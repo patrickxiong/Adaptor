@@ -13,11 +13,7 @@ namespace Adapter
             _ticketManager = ticketManager;
         }
 
-        public string CreateSession(Session session)
-        {
-            return default;
-            //return _sessionManager.CreateSession(session);
-        }
+        public void CreateSession(Session session) => _sessionManager.AddSession(session);
 
         public void ReleaseSession(string sessionToken) => _sessionManager.ReleaseSession(sessionToken);
 

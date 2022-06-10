@@ -8,7 +8,7 @@ namespace Adapter
 
         void ReleaseSession(string modelSessionToken);
 
-        string CreateSession(Session session);
+        void CreateSession(Session session);
 
         EventBase GetEvents(string sessionToken, string campaign, string user);
     }
