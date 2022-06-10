@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Adapter
 {
@@ -10,10 +11,11 @@ namespace Adapter
 
         public SessionManager(ILogger<SessionManager> logger)
         {
-
         }
         public void AddSession(Session session)
         {
+            KillDeadSessions();
+
             _sessions.Add(session.SessionToken, session);
         }
 
@@ -36,6 +38,15 @@ namespace Adapter
         public void ReleaseSession(string sessionToken)
         {
             _sessions.Remove(sessionToken);
+        }
+
+        private void KillDeadSessions()
+        {
+            foreach (var session in _sessions.Values.ToArray() )
+            {
+                if (session.ExpireTime < DateTime.Now)
+                    ReleaseSession(session.SessionToken);
+            }
         }
     }
 }
