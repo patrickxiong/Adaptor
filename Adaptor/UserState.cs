@@ -1,6 +1,13 @@
 ﻿namespace Adapter
 {
-    public class UserState
+    public enum UserState
     {
+        LoggedIn,
+        Ready,
+        OnCall,
+        OffCall,
+        Dialling,
+        OnBreak,
+        LoggedOut
     }
 }
