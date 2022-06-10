@@ -26,7 +26,7 @@ namespace Adapter
                 if (session.ExpireTime < DateTime.Now)
                     session = null;
                 else
-                    session.ExpireTime = DateTime.Now.AddSeconds(15);
+                    session.ExpireTime = DateTime.Now.AddMinutes(Session.SessionLifetimeInMinutes);
 
                 if (session?.State == UserState.SessionReleased)
                     session = null;

@@ -174,7 +174,8 @@ namespace Adapter
 
         public void Connect()
         {
-            _ticketServiceClient.Connect(ConfigurationManager.AppSettings["IP"], ConfigurationManager.AppSettings["Port"]);
+            _ticketServiceClient.Connect("172.25.12.79", "6502");
+            //ConfigurationManager.AppSettings["IP"], ConfigurationManager.AppSettings["Port"]
         }
 
         public void Disconnect()

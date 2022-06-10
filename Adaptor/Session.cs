@@ -8,6 +8,8 @@ namespace Adapter
 {
     public class Session : IDisposable
     {
+        public const int SessionLifetimeInMinutes = 20;
+
         public string SessionToken { get; set; }
         public DateTime ExpireTime { get; set; }
         public string UserId { get; set; }
@@ -21,6 +23,7 @@ namespace Adapter
             TicketManager.Session = this;
             SessionToken = Guid.NewGuid().ToString();
             State = UserState.SessionCreated;
+            ExpireTime = DateTime.Now.AddMinutes(SessionLifetimeInMinutes);
         }
 
         public void Dispose()

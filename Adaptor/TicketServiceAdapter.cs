@@ -1,4 +1,5 @@
-﻿using Workshop2022.API.Models;
+﻿using System;
+using Workshop2022.API.Models;
 
 namespace Adapter
 {
@@ -17,7 +18,15 @@ namespace Adapter
 
         public void ReleaseSession(string sessionToken) => _sessionManager.ReleaseSession(sessionToken);
 
-        public void Login(string sessionToken, string userId, string password) => _ticketManager.Login(sessionToken, userId, password);
+        public void Login(string sessionToken, string userId, string password)
+        {
+            var session = _sessionManager.GetSession(sessionToken);
+            if (session == null)
+                throw new Exception("No session found!");
+
+            _ticketManager.Connect();
+            _ticketManager.Login(sessionToken, userId, password);
+        }
 
         public EventBase GetEvents(string sessionToken, string campaign, string user)
         {
