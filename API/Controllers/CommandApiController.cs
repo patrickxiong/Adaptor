@@ -35,10 +35,10 @@ namespace Workshop2022.API.Controllers
         [Route("session-create")]
         public IActionResult CreateSession(SessionCreateRequest model, Session session)
         {
-            var generatedToken = _ticketServiceAdapter.CreateSession(session);
+            _ticketServiceAdapter.CreateSession(session);
             var result = new SessionCreateResponse
             {
-                SessionToken = generatedToken
+                SessionToken = session.SessionToken
             };
 
             return Ok(result);
