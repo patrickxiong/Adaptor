@@ -1,4 +1,6 @@
-﻿namespace Adapter
+﻿using Workshop2022.API.Models;
+
+namespace Adapter
 {
     public interface ITicketServiceAdapter
     {
@@ -7,5 +9,7 @@
         void ReleaseSession(string modelSessionToken);
 
         string CreateSession(Session session);
+
+        EventBase GetEvents(string sessionToken, string campaign, string user);
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using Adapter;
+﻿using Adapter;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Workshop2022.API.Models;
@@ -139,15 +138,17 @@ namespace Workshop2022.API.Controllers
         public IActionResult PollEvent(PollEventRequest model)
         {
 
+            var result = _ticketServiceAdapter.GetEvents(model.SessionToken, model.Campaign, model.User);
+            // -- add code as needed
             
 
 
             // retrieves and return queued events
-            var result = new EventBase()  // replace with a respective event(s)
-            {
-                // DEMO ONLY!!!
-                Expiry = DateTime.Now.AddSeconds(EVENT_EXPIRY_TIME_SECONDS)
-            };
+            //var result = new EventBase()  // replace with a respective event(s)
+            //{
+            //    // DEMO ONLY!!!
+            //    Expiry = DateTime.Now.AddSeconds(EVENT_EXPIRY_TIME_SECONDS)
+            //};
 
             return Ok(result);
         }

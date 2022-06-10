@@ -1,4 +1,6 @@
-﻿namespace Adapter
+﻿using Workshop2022.API.Models;
+
+namespace Adapter
 {
     public class TicketServiceAdapter: ITicketServiceAdapter
     {
@@ -16,5 +18,10 @@
         public void ReleaseSession(string sessionToken) => _sessionManager.ReleaseSession(sessionToken);
 
         public void Login(string sessionToken,string userId,string password) => _ticketManager.Login(sessionToken, userId, password);
+
+        public EventBase GetEvents(string sessionToken, string campaign, string user)
+        {
+            return default;
+        }
     }
 }
