@@ -11,7 +11,7 @@
             _ticketManager = ticketManager;
         }
 
-        public string CreateSession() => _sessionManager.CreateSession();
+        public string CreateSession(string user) => _sessionManager.CreateSession();
 
         public void ReleaseSession(string sessionToken) => _sessionManager.ReleaseSession(sessionToken);
 
