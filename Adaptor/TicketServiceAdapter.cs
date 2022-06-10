@@ -1,27 +1,19 @@
-﻿using System;
-
-namespace Adapter
+﻿namespace Adapter
 {
     public class TicketServiceAdapter: ITicketServiceAdapter
     {
         private readonly ITicketManager _ticketManager;
+        private readonly ISessionManager _sessionManager;
 
-        public TicketServiceAdapter(SessionManager sessionManager, ITicketManager ticketManager)
+        public TicketServiceAdapter(ISessionManager sessionManager, ITicketManager ticketManager)
         {
+            _sessionManager = sessionManager;
             _ticketManager = ticketManager;
         }
 
-        public string CreateSession()
-        {
-            var sessionToken = Guid.NewGuid().ToString();
+        public string CreateSession() => _sessionManager.CreateSession();
 
-            return sessionToken;
-        }
-
-        public void ReleaseSession(string sessionToken)
-        {
-
-        }
+        public void ReleaseSession(string sessionToken) => _sessionManager.ReleaseSession(sessionToken);
 
         public void Login(string sessionToken,string userId,string password) => _ticketManager.Login(sessionToken, userId, password);
     }

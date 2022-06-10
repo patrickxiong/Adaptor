@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Adapter
 {
-    public class SessionManager
+    public class SessionManager: ISessionManager
     {
         private Dictionary<string, Session> _sessions = new Dictionary<string, Session>();
 
-        string CreateSession()
+        public string CreateSession()
         {
             var sessionToken = Guid.NewGuid().ToString();
             var session = new Session
@@ -21,7 +20,7 @@ namespace Adapter
             return sessionToken;
         }
 
-        Session GetSession(string sessionToken)
+        public Session GetSession(string sessionToken)
         {
             if (_sessions.TryGetValue(sessionToken, out var session))
             {
@@ -37,7 +36,7 @@ namespace Adapter
             return session;
         }
 
-        void ReleaseSession(string sessionToken)
+        public void ReleaseSession(string sessionToken)
         {
             _sessions.Remove(sessionToken);
         }
