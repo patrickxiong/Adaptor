@@ -33,7 +33,7 @@ namespace Workshop2022.API.Controllers
 
         [HttpPost]
         [Route("session-create")]
-        public IActionResult CreateSession(SessionCreateRequest model, Session session)
+        public IActionResult CreateSession(SessionCreateRequest model, [FromServices] Session session)
         {
             session.UserId = model.User;
             _ticketServiceAdapter.CreateSession(session);
@@ -69,7 +69,7 @@ namespace Workshop2022.API.Controllers
         {
 
             // -- add code as needed
-            
+
             return Ok();
         }
 
@@ -78,7 +78,7 @@ namespace Workshop2022.API.Controllers
         [Route("hangup")]
         public IActionResult HangUp(HangUpRequest model)
         {
-            _ticketServiceAdapter.HangUp(model.SessionToken,model.SessionToken,model.User);
+            _ticketServiceAdapter.HangUp(model.SessionToken, model.SessionToken, model.User);
             return Ok();
         }
 
@@ -140,7 +140,7 @@ namespace Workshop2022.API.Controllers
 
             var result = _ticketServiceAdapter.GetEvents(model.SessionToken, model.Campaign, model.User);
             // -- add code as needed
-            
+
 
 
             // retrieves and return queued events
