@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <_PublishTargetUrl>C:\_source\Hackathon\Hackathon202204\HackathonBankApi\bin\Release\netcoreapp3.1\publish\</_PublishTargetUrl>
+    <History>True|2022-04-06T04:21:07.0106899Z;True|2022-04-06T10:38:55.4124151+10:00;True|2022-04-06T09:51:24.2319277+10:00;True|2022-04-06T09:49:15.1974540+10:00;True|2022-04-06T09:46:47.2142012+10:00;</History>
+  </PropertyGroup>
+</Project>

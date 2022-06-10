@@ -1,0 +1,10 @@
+C:\Aristocrat\Workshop202206\Model\bin\Debug\netcoreapp3.1\Model.deps.json
+C:\Aristocrat\Workshop202206\Model\bin\Debug\netcoreapp3.1\Model.dll
+C:\Aristocrat\Workshop202206\Model\bin\Debug\netcoreapp3.1\Model.pdb
+C:\Aristocrat\Workshop202206\Model\obj\Debug\netcoreapp3.1\Model.csproj.AssemblyReference.cache
+C:\Aristocrat\Workshop202206\Model\obj\Debug\netcoreapp3.1\Model.GeneratedMSBuildEditorConfig.editorconfig
+C:\Aristocrat\Workshop202206\Model\obj\Debug\netcoreapp3.1\Model.AssemblyInfoInputs.cache
+C:\Aristocrat\Workshop202206\Model\obj\Debug\netcoreapp3.1\Model.AssemblyInfo.cs
+C:\Aristocrat\Workshop202206\Model\obj\Debug\netcoreapp3.1\Model.csproj.CoreCompileInputs.cache
+C:\Aristocrat\Workshop202206\Model\obj\Debug\netcoreapp3.1\Model.dll
+C:\Aristocrat\Workshop202206\Model\obj\Debug\netcoreapp3.1\Model.pdb

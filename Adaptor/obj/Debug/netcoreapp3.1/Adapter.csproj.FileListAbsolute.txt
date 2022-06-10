@@ -1,0 +1,15 @@
+C:\Aristocrat\Workshop202206\Adaptor\obj\Debug\netcoreapp3.1\Adapter.csproj.AssemblyReference.cache
+C:\Aristocrat\Workshop202206\Adaptor\obj\Debug\netcoreapp3.1\Adapter.GeneratedMSBuildEditorConfig.editorconfig
+C:\Aristocrat\Workshop202206\Adaptor\obj\Debug\netcoreapp3.1\Adapter.AssemblyInfoInputs.cache
+C:\Aristocrat\Workshop202206\Adaptor\obj\Debug\netcoreapp3.1\Adapter.AssemblyInfo.cs
+C:\Aristocrat\Workshop202206\Adaptor\obj\Debug\netcoreapp3.1\Adapter.csproj.CoreCompileInputs.cache
+C:\Aristocrat\Workshop202206\Adaptor\bin\Debug\netcoreapp3.1\Adapter.deps.json
+C:\Aristocrat\Workshop202206\Adaptor\bin\Debug\netcoreapp3.1\Adapter.dll
+C:\Aristocrat\Workshop202206\Adaptor\bin\Debug\netcoreapp3.1\Adapter.pdb
+C:\Aristocrat\Workshop202206\Adaptor\bin\Debug\netcoreapp3.1\Model.dll
+C:\Aristocrat\Workshop202206\Adaptor\bin\Debug\netcoreapp3.1\Service.dll
+C:\Aristocrat\Workshop202206\Adaptor\bin\Debug\netcoreapp3.1\Model.pdb
+C:\Aristocrat\Workshop202206\Adaptor\bin\Debug\netcoreapp3.1\Service.pdb
+C:\Aristocrat\Workshop202206\Adaptor\obj\Debug\netcoreapp3.1\Adapter.csproj.CopyComplete
+C:\Aristocrat\Workshop202206\Adaptor\obj\Debug\netcoreapp3.1\Adapter.dll
+C:\Aristocrat\Workshop202206\Adaptor\obj\Debug\netcoreapp3.1\Adapter.pdb
