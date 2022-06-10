@@ -1,4 +1,5 @@
 ﻿using System;
+using Adapter;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Workshop2022.API.Models;
@@ -12,11 +13,13 @@ namespace Workshop2022.API.Controllers
         private const int EVENT_EXPIRY_TIME_SECONDS = 15;
 
         private readonly ILogger<CommandApiController> _logger;
+        private readonly ITicketServiceAdapter _ticketServiceAdapter;
 
 
-        public CommandApiController(ILogger<CommandApiController> logger)
+        public CommandApiController(ILogger<CommandApiController> logger, ITicketServiceAdapter ticketServiceAdapter)
         {
             _logger = logger;
+            _ticketServiceAdapter = ticketServiceAdapter;
         }
 
 
@@ -31,14 +34,12 @@ namespace Workshop2022.API.Controllers
         [Route("session-create")]
         public IActionResult CreateSession(SessionCreateRequest model)
         {
-
-            // -- add code as needed
-
-            var result = new SessionCreateResponse()
+            var generatedToken = _ticketServiceAdapter.CreateSession();
+            var result = new SessionCreateResponse
             {
-              SessionToken   = "generated_token"
+                SessionToken = generatedToken
             };
-            
+
             return Ok(result);
         }
 
@@ -46,9 +47,7 @@ namespace Workshop2022.API.Controllers
         [Route("session-release")]
         public IActionResult ReleaseSession(SessionReleaseRequest model)
         {
-
-            // -- add code as needed
-
+            _ticketServiceAdapter.ReleaseSession(model.SessionToken);
             return Ok();
         }
 
@@ -57,9 +56,7 @@ namespace Workshop2022.API.Controllers
         [Route("login")]
         public IActionResult Login(LoginRequest model)
         {
-
-            // -- add code as needed
-
+            _ticketServiceAdapter.Login(model.SessionToken, model.User, model.Password);
             return Ok();
         }
 
