@@ -153,7 +153,7 @@ namespace Adapter
                 OutEvents.Enqueue(new TicketDataEvent()
                 {
                     SessionToken = _session.SessionToken,
-                    Event = "CallEnded",
+                    Event = "TicketData",
                     User = e.UserId,
                     Campaign = e.Campaign,
                     Expiry = DateTime.Now.AddSeconds(15),
