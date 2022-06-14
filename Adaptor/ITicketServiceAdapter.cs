@@ -1,4 +1,5 @@
-﻿using Workshop2022.API.Models;
+﻿using System;
+using Workshop2022.API.Models;
 
 namespace Adapter
 {
@@ -21,5 +22,9 @@ namespace Adapter
         void SubmitOutcome(string sessionToken, string campaign, string user, int outcome);
 
         void HangUp(string sessionToken, string campaign, string user);
+        
+        void Callback(string sessionToken, DateTime dateTime);
+
+        void MakeCall(string sessionToken, string phoneNumber);
     }
 }

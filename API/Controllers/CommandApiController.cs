@@ -13,14 +13,11 @@ namespace Workshop2022.API.Controllers
 
         private readonly ILogger<CommandApiController> _logger;
         private readonly ITicketServiceAdapter _ticketServiceAdapter;
-        private readonly ISessionManager _sessionManager;
 
-
-        public CommandApiController(ILogger<CommandApiController> logger, ITicketServiceAdapter ticketServiceAdapter, ISessionManager sessionManager)
+        public CommandApiController(ILogger<CommandApiController> logger, ITicketServiceAdapter ticketServiceAdapter)
         {
             _logger = logger;
             _ticketServiceAdapter = ticketServiceAdapter;
-            _sessionManager = sessionManager;
         }
 
 
@@ -67,10 +64,7 @@ namespace Workshop2022.API.Controllers
         [Route("makecall")]
         public IActionResult MakeCallRequest(MakeCallRequest model)
         {
-
-            // -- add code as needed
-            //_ticketServiceAdapter.(model.SessionToken, model.User, model.Password);
-
+            _ticketServiceAdapter.MakeCall(model.SessionToken, model.PhoneNumber);
             return Ok();
         }
 
@@ -87,10 +81,7 @@ namespace Workshop2022.API.Controllers
         [Route("outcome")]
         public IActionResult SubmitOutcome(SubmitOutcomeRequest model)
         {
-
-            // -- add code as needed
-
-            _ticketServiceAdapter.SubmitOutcome(model.SessionToken, model.Campaign, model.User,model.Outcome);
+            _ticketServiceAdapter.SubmitOutcome(model.SessionToken, model.Campaign, model.User, model.Outcome);
             return Ok();
         }
 
@@ -98,9 +89,7 @@ namespace Workshop2022.API.Controllers
         [Route("callback")]
         public IActionResult SubmitCallback(SubmitCallbackRequest model)
         {
-
-            // -- add code as needed
-
+            _ticketServiceAdapter.Callback(model.SessionToken, model.CallDateTime);
             return Ok();
         }
 
@@ -108,9 +97,7 @@ namespace Workshop2022.API.Controllers
         [Route("request-break")]
         public IActionResult RequestBreak(BreakRequest model)
         {
-
-            // -- add code as needed
-
+            _ticketServiceAdapter.RequestBreak(model.SessionToken, model.Campaign, model.User);
             return Ok();
         }
 
@@ -118,9 +105,7 @@ namespace Workshop2022.API.Controllers
         [Route("resume")]
         public IActionResult Resume(BreakRequest model)
         {
-
-            // -- add code as needed
-
+            _ticketServiceAdapter.Resume(model.SessionToken, model.Campaign, model.User);
             return Ok();
         }
 
@@ -128,9 +113,7 @@ namespace Workshop2022.API.Controllers
         [Route("request-logout")]
         public IActionResult RequestLogout(LogoutRequest model)
         {
-
-            // -- add code as needed
-
+            _ticketServiceAdapter.RequestLogout(model.SessionToken, model.Campaign, model.User);
             return Ok();
         }
 
@@ -139,21 +122,8 @@ namespace Workshop2022.API.Controllers
         [Route("poll-event")]
         public IActionResult PollEvent(PollEventRequest model)
         {
-
             var result = _ticketServiceAdapter.GetEvent(model.SessionToken, model.Campaign, model.User);
-            // -- add code as needed
-
-
-
-            // retrieves and return queued events
-            //var result = new EventBase()  // replace with a respective event(s)
-            //{
-            //    // DEMO ONLY!!!
-            //    Expiry = DateTime.Now.AddSeconds(EVENT_EXPIRY_TIME_SECONDS)
-            //};
-
             return Ok(result);
         }
-
     }
 }

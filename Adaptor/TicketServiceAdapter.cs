@@ -90,5 +90,17 @@ namespace Adapter
             var (_, ticketManager) = GetSessionAndTicketManager(sessionToken);
             ticketManager.HangUp();
         }
+
+        public void Callback(string sessionToken, DateTime callDateTime)
+        {
+            var (_, ticketManager) = GetSessionAndTicketManager(sessionToken);
+            ticketManager.Callback(callDateTime);
+        }
+
+        public void MakeCall(string sessionToken,string phoneNumber)
+        {
+            var (_, ticketManager) = GetSessionAndTicketManager(sessionToken);
+            ticketManager.MakeCall(phoneNumber);
+        }
     }
 }
