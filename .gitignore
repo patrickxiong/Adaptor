@@ -9,6 +9,5 @@
 /Service/bin
 /Service/obj
 /API/.config
-/bin
-/obj
-
+/TicketServiceClient/bin
+/TicketServiceClient/obj
