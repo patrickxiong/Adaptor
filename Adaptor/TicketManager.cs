@@ -47,15 +47,18 @@ namespace Adapter
 
             _ticketServiceClient.ValidatedUserEvent += (s, e) =>
             {
-                OutEvents.Enqueue(new StatusChangeEvent()
-                {
-                    SessionToken = _session.SessionToken,
-                    Event = "User validated",
-                    User = e.UserId,
-                    Campaign = _session.Campaign,
-                    Expiry = DateTime.Now.AddSeconds(15),
-                    Status = e.IsValidated ? "Validated" : "Not-validated"
-                });
+                //OutEvents.Enqueue(new StatusChangeEvent()
+                //{
+                //    SessionToken = _session.SessionToken,
+                //    Event = "User validated",
+                //    User = e.UserId,
+                //    Campaign = _session.Campaign,
+                //    Expiry = DateTime.Now.AddSeconds(15),
+                //    Status = e.IsValidated ? "Validated" : "Not-validated"
+                //});
+
+
+
             };
 
             _ticketServiceClient.LoggedInEvent += (s, e) =>
@@ -188,9 +191,11 @@ namespace Adapter
             _ticketServiceClient.HangUp();
         }
 
-        public void Login(string userId, string extension, string campaign)
+        public void Login(string userId, string password)
         {
-            _ticketServiceClient.Login(userId, extension, campaign);
+            
+            //_ticketServiceClient.Login(userId, extension, campaign);
+
         }
 
         public void Logout()

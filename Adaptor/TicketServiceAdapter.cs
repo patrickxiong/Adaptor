@@ -14,9 +14,18 @@ namespace Adapter
             _ticketManager = ticketManager;
         }
 
-        public void CreateSession(Session session) => _sessionManager.AddSession(session);
+        public void CreateSession(Session session)
+        {
+            _ticketManager.Connect();
+            _sessionManager.AddSession(session);
 
-        public void ReleaseSession(string sessionToken) => _sessionManager.ReleaseSession(sessionToken);
+        }
+
+        public void ReleaseSession(string sessionToken)
+        {
+            _ticketManager.Disconnect();
+            _sessionManager.ReleaseSession(sessionToken);
+        } 
 
         public void Login(string sessionToken, string userId, string password)
         {
@@ -24,8 +33,7 @@ namespace Adapter
             if (session == null)
                 throw new Exception("No session found!");
 
-            _ticketManager.Connect();
-            _ticketManager.Login(sessionToken, userId, password);
+            _ticketManager.Login(userId, password);
         }
 
         public EventBase GetEvents(string sessionToken, string campaign, string user)

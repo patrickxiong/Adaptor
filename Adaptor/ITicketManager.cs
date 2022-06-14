@@ -7,8 +7,7 @@ namespace Adapter
         Session Session { get; set; }
         void Connect();
         void Disconnect();
-        void ValidateUser(string userId, string password);
-        void Login(string userId, string extension, string campaign);
+        void Login(string userId, string password);
         void Available();
         void Unavailable();
         void Logout();
