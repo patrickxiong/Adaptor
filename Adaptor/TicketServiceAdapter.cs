@@ -103,11 +103,4 @@ namespace Adapter
             ticketManager.MakeCall(phoneNumber);
         }
     }
-
-    public class SessionNotFoundException : Exception
-    {
-        public SessionNotFoundException(string noSessionFound):base(noSessionFound)
-        {
-        }
-    }
 }
