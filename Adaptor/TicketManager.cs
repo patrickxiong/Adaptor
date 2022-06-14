@@ -19,11 +19,12 @@ namespace Adapter
         }
 
         private readonly ITicketServiceClient _ticketServiceClient;
+        private readonly IDataManager _dataManager;
 
-        public TicketManager(ITicketServiceClient ticketServiceClient)
+        public TicketManager(ITicketServiceClient ticketServiceClient, IDataManager dataManager)
         {
             _ticketServiceClient = ticketServiceClient;
-
+            _dataManager = dataManager;
             SubscribeToEvents();
         }
 
@@ -190,7 +191,7 @@ namespace Adapter
 
         public void Login(string userId, string password)
         {
-            
+
             //_ticketServiceClient.Login(userId, extension, campaign);
 
         }
@@ -215,6 +216,17 @@ namespace Adapter
             _ticketServiceClient.Unavailable();
         }
 
-        public bool TryPopEvent(out EventBase result) => OutEvents.TryDequeue(out result);
+        public bool TryPopEvent(out EventBase result)
+        {
+            while (OutEvents.TryDequeue(out result))
+            {
+                if (result.Expiry >= DateTime.Now)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

@@ -29,7 +29,8 @@ namespace Workshop2022
             services.AddControllers();
             services.AddTransient<ITicketServiceClient, Workshop2022.TicketServiceClient.TicketServiceClient>();
             services.AddTransient<Session>();
-            services.AddSingleton<ITicketManager, TicketManager>();
+            services.AddTransient<ITicketManager, TicketManager>();
+
             services.AddSingleton<IDataManager, DataManager>();
             services.AddSingleton<ISessionManager,SessionManager>();
             services.AddSingleton<ITicketServiceAdapter,TicketServiceAdapter>();

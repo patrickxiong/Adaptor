@@ -1,4 +1,5 @@
-﻿using Adapter;
+﻿using System;
+using Adapter;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Workshop2022.API.Models;
@@ -9,6 +10,8 @@ namespace Workshop2022.API.Controllers
     [Route("API")]
     public class CommandApiController : ControllerBase
     {
+        const string InvalidSessionToken = "Invalid session token";
+
         private const int EVENT_EXPIRY_TIME_SECONDS = 15;
 
         private readonly ILogger<CommandApiController> _logger;
@@ -32,13 +35,22 @@ namespace Workshop2022.API.Controllers
         [Route("session-create")]
         public IActionResult CreateSession(SessionCreateRequest model, [FromServices] Session session)
         {
-            session.UserId = model.User;
-            _ticketServiceAdapter.CreateSession(session);
-
-            var result = new SessionCreateResponse
+            SessionCreateResponse result;
+            try
             {
-                SessionToken = session.SessionToken
-            };
+                session.UserId = model.User;
+                _ticketServiceAdapter.CreateSession(session);
+
+                result = new SessionCreateResponse
+                {
+                    SessionToken = session.SessionToken
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return StatusCode(500, ex);
+            }
 
             return Ok(result);
         }
@@ -47,16 +59,40 @@ namespace Workshop2022.API.Controllers
         [Route("session-release")]
         public IActionResult ReleaseSession(SessionReleaseRequest model)
         {
-            _ticketServiceAdapter.ReleaseSession(model.SessionToken);
+            try
+            {
+                _ticketServiceAdapter.ReleaseSession(model.SessionToken);
+            }
+            catch (SessionNotFoundException)
+            {
+                return StatusCode(401, InvalidSessionToken);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return StatusCode(500, ex);
+            }
+
             return Ok();
         }
-
 
         [HttpPost]
         [Route("login")]
         public IActionResult Login(LoginRequest model)
         {
-            _ticketServiceAdapter.Login(model.SessionToken, model.User, model.Password);
+            try
+            {
+                _ticketServiceAdapter.Login(model.SessionToken, model.User, model.Password);
+            }
+            catch (SessionNotFoundException)
+            {
+                return StatusCode(401, InvalidSessionToken);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return StatusCode(500, ex);
+            }
             return Ok();
         }
 
@@ -64,7 +100,19 @@ namespace Workshop2022.API.Controllers
         [Route("makecall")]
         public IActionResult MakeCallRequest(MakeCallRequest model)
         {
-            _ticketServiceAdapter.MakeCall(model.SessionToken, model.PhoneNumber);
+            try
+            {
+                _ticketServiceAdapter.MakeCall(model.SessionToken, model.PhoneNumber);
+            }
+            catch (SessionNotFoundException)
+            {
+                return StatusCode(401, InvalidSessionToken);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return StatusCode(500, ex);
+            }
             return Ok();
         }
 
@@ -73,7 +121,19 @@ namespace Workshop2022.API.Controllers
         [Route("hangup")]
         public IActionResult HangUp(HangUpRequest model)
         {
-            _ticketServiceAdapter.HangUp(model.SessionToken, model.SessionToken, model.User);
+            try
+            {
+                _ticketServiceAdapter.HangUp(model.SessionToken, model.SessionToken, model.User);
+            }
+            catch (SessionNotFoundException)
+            {
+                return StatusCode(401, InvalidSessionToken);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return StatusCode(500, ex);
+            }
             return Ok();
         }
 
@@ -81,7 +141,19 @@ namespace Workshop2022.API.Controllers
         [Route("outcome")]
         public IActionResult SubmitOutcome(SubmitOutcomeRequest model)
         {
-            _ticketServiceAdapter.SubmitOutcome(model.SessionToken, model.Campaign, model.User, model.Outcome);
+            try
+            {
+                _ticketServiceAdapter.SubmitOutcome(model.SessionToken, model.Campaign, model.User, model.Outcome);
+            }
+            catch (SessionNotFoundException)
+            {
+                return StatusCode(401, InvalidSessionToken);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return StatusCode(500, ex);
+            }
             return Ok();
         }
 
@@ -89,7 +161,19 @@ namespace Workshop2022.API.Controllers
         [Route("callback")]
         public IActionResult SubmitCallback(SubmitCallbackRequest model)
         {
-            _ticketServiceAdapter.Callback(model.SessionToken, model.CallDateTime);
+            try
+            {
+                _ticketServiceAdapter.Callback(model.SessionToken, model.CallDateTime);
+            }
+            catch (SessionNotFoundException)
+            {
+                return StatusCode(401, InvalidSessionToken);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return StatusCode(500, ex);
+            }
             return Ok();
         }
 
@@ -97,7 +181,19 @@ namespace Workshop2022.API.Controllers
         [Route("request-break")]
         public IActionResult RequestBreak(BreakRequest model)
         {
-            _ticketServiceAdapter.RequestBreak(model.SessionToken, model.Campaign, model.User);
+            try
+            {
+                _ticketServiceAdapter.RequestBreak(model.SessionToken, model.Campaign, model.User);
+            }
+            catch (SessionNotFoundException)
+            {
+                return StatusCode(401, InvalidSessionToken);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return StatusCode(500, ex);
+            }
             return Ok();
         }
 
@@ -105,7 +201,19 @@ namespace Workshop2022.API.Controllers
         [Route("resume")]
         public IActionResult Resume(BreakRequest model)
         {
-            _ticketServiceAdapter.Resume(model.SessionToken, model.Campaign, model.User);
+            try
+            {
+                _ticketServiceAdapter.Resume(model.SessionToken, model.Campaign, model.User);
+            }
+            catch (SessionNotFoundException)
+            {
+                return StatusCode(401, InvalidSessionToken);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return StatusCode(500, ex);
+            }
             return Ok();
         }
 
@@ -113,16 +221,41 @@ namespace Workshop2022.API.Controllers
         [Route("request-logout")]
         public IActionResult RequestLogout(LogoutRequest model)
         {
-            _ticketServiceAdapter.RequestLogout(model.SessionToken, model.Campaign, model.User);
+            try
+            {
+                _ticketServiceAdapter.RequestLogout(model.SessionToken, model.Campaign, model.User);
+            }
+            catch (SessionNotFoundException)
+            {
+                return StatusCode(401, InvalidSessionToken);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return StatusCode(500, ex);
+            }
             return Ok();
         }
-
 
         [HttpPost]
         [Route("poll-event")]
         public IActionResult PollEvent(PollEventRequest model)
         {
-            var result = _ticketServiceAdapter.GetEvent(model.SessionToken, model.Campaign, model.User);
+            EventBase result;
+            try
+            {
+                result = _ticketServiceAdapter.GetEvent(model.SessionToken, model.Campaign, model.User);
+            }
+            catch (SessionNotFoundException)
+            {
+                return StatusCode(401, InvalidSessionToken);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return StatusCode(500, ex);
+            }
+
             return Ok(result);
         }
     }

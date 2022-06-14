@@ -23,7 +23,7 @@ namespace Adapter
         {
             var session = _sessionManager.GetSession(sessionToken);
             if (session == null)
-                throw new Exception("No session found!");
+                throw new SessionNotFoundException("No session found!");
 
             var ticketManager = session.TicketManager;
             ticketManager.Disconnect();
@@ -101,6 +101,13 @@ namespace Adapter
         {
             var (_, ticketManager) = GetSessionAndTicketManager(sessionToken);
             ticketManager.MakeCall(phoneNumber);
+        }
+    }
+
+    public class SessionNotFoundException : Exception
+    {
+        public SessionNotFoundException(string noSessionFound):base(noSessionFound)
+        {
         }
     }
 }

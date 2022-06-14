@@ -7,6 +7,11 @@ namespace Adapter
     {
         private readonly List<DataEntry> _entries = new List<DataEntry>();
 
+        public DataManager()
+        {
+            _entries.Add(new DataEntry { User = "User2004", Campaign = "tickets" });
+        }
+
         public string GetCampaign(string user)
         {
             return (from l in _entries where l.User == user select l).FirstOrDefault()?.Campaign;
