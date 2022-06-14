@@ -69,6 +69,7 @@ namespace Workshop2022.API.Controllers
         {
 
             // -- add code as needed
+            //_ticketServiceAdapter.(model.SessionToken, model.User, model.Password);
 
             return Ok();
         }
@@ -89,6 +90,7 @@ namespace Workshop2022.API.Controllers
 
             // -- add code as needed
 
+            _ticketServiceAdapter.SubmitOutcome(model.SessionToken, model.Campaign, model.User,model.Outcome);
             return Ok();
         }
 
@@ -138,7 +140,7 @@ namespace Workshop2022.API.Controllers
         public IActionResult PollEvent(PollEventRequest model)
         {
 
-            var result = _ticketServiceAdapter.GetEvents(model.SessionToken, model.Campaign, model.User);
+            var result = _ticketServiceAdapter.GetEvent(model.SessionToken, model.Campaign, model.User);
             // -- add code as needed
 
 

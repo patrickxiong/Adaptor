@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Configuration;
-using System.Text;
 using Workshop2022.API.Models;
 using Workshop2022.TicketServiceClient;
 
@@ -218,9 +215,6 @@ namespace Adapter
             _ticketServiceClient.Unavailable();
         }
 
-        public void ValidateUser(string userId, string password)
-        {
-            _ticketServiceClient.ValidateUser(userId, password);
-        }
+        public bool TryPopEvent(out EventBase result) => OutEvents.TryDequeue(out result);
     }
 }

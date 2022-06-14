@@ -10,7 +10,7 @@ namespace Adapter
 
         void CreateSession(Session session);
 
-        EventBase GetEvents(string sessionToken, string campaign, string user);
+        EventBase GetEvent(string sessionToken, string campaign, string user);
 
         void RequestLogout(string sessionToken, string campaign, string user);
 
@@ -18,7 +18,7 @@ namespace Adapter
 
         void RequestBreak(string sessionToken, string campaign, string user);
 
-        void SubmitOutcome(string sessionToken, string campaign, string user, string outcome);
+        void SubmitOutcome(string sessionToken, string campaign, string user, int outcome);
 
         void HangUp(string sessionToken, string campaign, string user);
     }

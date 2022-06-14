@@ -1,4 +1,5 @@
 ﻿using System;
+using Workshop2022.API.Models;
 
 namespace Adapter
 {
@@ -14,6 +15,9 @@ namespace Adapter
         void MakeCall(string phoneNumber);
         void HangUp();
         void TransactionComplete(int outcome);
+
         void Callback(DateTime callDateTime);
+
+        bool TryPopEvent(out EventBase result);
     }
 }
