@@ -6,7 +6,7 @@ using Workshop2022.API.Models;
 
 namespace Adapter
 {
-    public class Session : IDisposable
+    public class Session
     {
         public const int SessionLifetimeInMinutes = 20;
 
@@ -28,6 +28,7 @@ namespace Adapter
 
         public void Dispose()
         {
+            TicketManager.Disconnect();
         }
     }
 }
