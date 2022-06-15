@@ -172,19 +172,19 @@ namespace Adapter
 
                     Session.State = UserState.OnCall;
                 }
-                else
-                if (e.IsManualCall && Session.State== UserState.Dialling)
-                {
-                    Enqueue(new StatusChangeEvent
-                    {
-                        SessionToken = _session.SessionToken,
-                        Event = "OnCall",
-                        User = e.UserId,
-                        Campaign = e.Campaign,
-                        Status = "OnCall"
-                    });
-                    Session.State = UserState.OnCall;
-                }
+                //else
+                //if (e.IsManualCall && Session.State== UserState.Dialling)
+                //{
+                //    Enqueue(new StatusChangeEvent
+                //    {
+                //        SessionToken = _session.SessionToken,
+                //        Event = "OnCall",
+                //        User = e.UserId,
+                //        Campaign = e.Campaign,
+                //        Status = "OnCall"
+                //    });
+                //    Session.State = UserState.OnCall;
+                //}
 
             };
         }
