@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Cache;
 using MessageUtils;
 using Workshop2022.TicketServiceClient.Sockets;
 
@@ -181,8 +182,9 @@ namespace Workshop2022.TicketServiceClient
 
         private void OnReceivedMessageEvent(object sender, SocketInfoArgs e)
         {
-            //REVIEW 
+            //REVIEW - raw data clean up should be done before parsing
             var data = _socketClient.GetData();
+           
 
             if (new MessageParser().Parse(data, out var header, out var attributes))
             {
@@ -210,10 +212,8 @@ namespace Workshop2022.TicketServiceClient
             var response = new ValidatedUserResponse()
             {
                 UserId = casted.User,
-                IsValidated = casted.Result == "1"
+                IsValidated = true  // quick fix of failing casted.Result == "1"
             };
-
-            response.IsValidated = true;
 
             ValidatedUserEvent?.Invoke(this, response);
         }
@@ -306,6 +306,7 @@ namespace Workshop2022.TicketServiceClient
         private void OnAgentConnect(ReceivedMessageBase message)
         {
             var casted = message as AgentConnectMessage;
+
             var response = new TicketDataResponse()
             {
                 UserId = casted.User,
@@ -316,15 +317,19 @@ namespace Workshop2022.TicketServiceClient
                 IsPreview = false,
                 IsManualCall = casted.IsManual
             };
+
             if (casted.Data is null)
                 response.Data = new List<TicketDataField>();
+
             response.Data = Array.ConvertAll(casted.Data, x => new TicketDataField
             {
                 FieldName = x.FieldName,
                 FieldType = x.FieldType,
                 FieldValue = x.FieldValue
             });
+
             TicketDataEvent?.Invoke(this, response);
         }
+
     }
 }

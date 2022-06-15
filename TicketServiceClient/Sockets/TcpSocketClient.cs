@@ -77,12 +77,12 @@ namespace Workshop2022.TicketServiceClient.Sockets
 
         public string GetData()
         {
-            var data = m_DataStack.Dequeue();
+            var data  = m_DataStack.Dequeue();
+
             return data.EndsWith("\0")
                 ? data?.Substring(0, data.Length - 1)
                 : data;
         }
-        
 
         private void StackDataBuffer(char[] parrBuff)
         {
