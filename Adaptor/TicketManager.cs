@@ -28,46 +28,40 @@ namespace Adapter
             SubscribeToEvents();
         }
 
+        private void Enqueue(EventBase @event)
+        {
+            @event.Expiry=DateTime.Now.AddMinutes(15);
+            OutEvents.Enqueue(@event);
+        }
+
         private void SubscribeToEvents()
         {
             _ticketServiceClient.ErrorEvent += (s, e) =>
             {
-                OutEvents.Enqueue(new ErrorEvent()
+                Enqueue(new ErrorEvent()
                 {
                     SessionToken = _session.SessionToken,
                     Event = "Error",
                     User = _session.UserId,
                     Campaign = _session.Campaign,
-                    Expiry = DateTime.Now.AddSeconds(15),
                     ErrorMessage = $"ErrorCode = {e.ErrorCode}, ErrorMessage = {e.ErrorMessage}"
                 });
             };
 
             _ticketServiceClient.ValidatedUserEvent += (s, e) =>
             {
-                //OutEvents.Enqueue(new StatusChangeEvent()
-                //{
-                //    SessionToken = _session.SessionToken,
-                //    Event = "User validated",
-                //    User = e.UserId,
-                //    Campaign = _session.Campaign,
-                //    Expiry = DateTime.Now.AddSeconds(15),
-                //    Status = e.IsValidated ? "Validated" : "Not-validated"
-                //});
-
                 if (e.IsValidated)
                 {
                     _ticketServiceClient.Login(Session.UserId, "2004", _dataManager.GetCampaign(Session.UserId));
                 }
                 else
                 {
-                    OutEvents.Enqueue(new ErrorEvent()
+                    Enqueue(new ErrorEvent()
                     {
                         SessionToken = _session.SessionToken,
                         Event = "Error",
                         User = e.UserId,
                         Campaign = _dataManager.GetCampaign(Session.UserId),
-                        Expiry = DateTime.Now.AddSeconds(15),
                         ErrorMessage = e.ErrorMessage
                     });
                 }
@@ -75,13 +69,12 @@ namespace Adapter
 
             _ticketServiceClient.LoggedInEvent += (s, e) =>
             {
-                OutEvents.Enqueue(new StatusChangeEvent()
+                Enqueue(new StatusChangeEvent()
                 {
                     SessionToken = _session.SessionToken,
                     Event = "LoggedIn",
                     User = e.UserId,
                     Campaign = e.Campaign,
-                    Expiry = DateTime.Now.AddSeconds(15),
                     Status = "LoggedIn"
                 });
 
@@ -90,65 +83,60 @@ namespace Adapter
 
             _ticketServiceClient.LoggedOutEvent += (s, e) =>
             {
-                OutEvents.Enqueue(new StatusChangeEvent()
+                Enqueue(new StatusChangeEvent()
                 {
                     SessionToken = _session.SessionToken,
                     Event = "LoggedOut",
                     User = e.UserId,
                     Campaign = e.Campaign,
-                    Expiry = DateTime.Now.AddSeconds(15),
                     Status = "LoggedOut"
                 });
             };
 
             _ticketServiceClient.LoggedOutEvent += (s, e) =>
             {
-                OutEvents.Enqueue(new StatusChangeEvent()
+                Enqueue(new StatusChangeEvent()
                 {
                     SessionToken = _session.SessionToken,
                     Event = "LoggedOut",
                     User = e.UserId,
                     Campaign = e.Campaign,
-                    Expiry = DateTime.Now.AddSeconds(15),
                     Status = "LoggedOut"
                 });
             };
 
             _ticketServiceClient.AvailableEvent += (s, e) =>
             {
-                OutEvents.Enqueue(new StatusChangeEvent()
+                Enqueue(new StatusChangeEvent()
                 {
                     SessionToken = _session.SessionToken,
                     Event = "Available",
                     User = e.UserId,
                     Campaign = e.Campaign,
-                    Expiry = DateTime.Now.AddSeconds(15),
                     Status = "UserReady"
                 });
             };
 
             _ticketServiceClient.AgentFreeEvent += (s, e) =>
             {
-                OutEvents.Enqueue(new StatusChangeEvent()
+                Enqueue(new StatusChangeEvent()
                 {
                     SessionToken = _session.SessionToken,
                     Event = "AgentFree",
                     User = e.UserId,
                     Campaign = e.Campaign,
-                    Expiry = DateTime.Now.AddSeconds(15),
                     Status = "BreakGranted"
                 });
             };
 
             _ticketServiceClient.CallEndedEvent += (s, e) =>
             {
-                OutEvents.Enqueue(new StatusChangeEvent()
+                Enqueue(new StatusChangeEvent()
                 {
                     SessionToken = _session.SessionToken,
                     Event = "CallEnded",
                     User = e.UserId,
                     Campaign = e.Campaign,
-                    Expiry = DateTime.Now.AddSeconds(15),
                     Status = "CallEnded"
                 });
             };
@@ -167,13 +155,12 @@ namespace Adapter
                         });
                     }
 
-                OutEvents.Enqueue(new TicketDataEvent()
+                Enqueue(new TicketDataEvent()
                 {
                     SessionToken = _session.SessionToken,
                     Event = "TicketData",
                     User = e.UserId,
                     Campaign = e.Campaign,
-                    Expiry = DateTime.Now.AddSeconds(15),
                     PhoneNumber = e.PhoneNumber,
                     Data = dataList
                 });
