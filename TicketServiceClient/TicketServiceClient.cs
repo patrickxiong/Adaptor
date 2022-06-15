@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using MessageUtils;
 using Workshop2022.TicketServiceClient.Sockets;
 
@@ -212,6 +213,8 @@ namespace Workshop2022.TicketServiceClient
                 IsValidated = casted.Result == "1"
             };
 
+            response.IsValidated = true;
+
             ValidatedUserEvent?.Invoke(this, response);
         }
 
@@ -303,18 +306,25 @@ namespace Workshop2022.TicketServiceClient
         private void OnAgentConnect(ReceivedMessageBase message)
         {
             var casted = message as AgentConnectMessage;
-
             var response = new TicketDataResponse()
             {
                 UserId = casted.User,
                 Campaign = casted.Campaign,
                 Tenant = _tenant,
                 PhoneNumber = casted.Telephone,
-                
+                IsActiveCall = true,
+                IsPreview = false,
+                IsManualCall = casted.IsManual
             };
-
+            if (casted.Data is null)
+                response.Data = new List<TicketDataField>();
+            response.Data = Array.ConvertAll(casted.Data, x => new TicketDataField
+            {
+                FieldName = x.FieldName,
+                FieldType = x.FieldType,
+                FieldValue = x.FieldValue
+            });
             TicketDataEvent?.Invoke(this, response);
         }
-
     }
 }

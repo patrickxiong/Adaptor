@@ -191,7 +191,6 @@ namespace Workshop2022.TicketServiceClient
             Map(f => f.Campaign, "CN", typeof(string));
         }
     }
-
     public class AgentConnectMessage : ReceivedMessageBase
     {
         public struct DataField
@@ -199,11 +198,9 @@ namespace Workshop2022.TicketServiceClient
             public string FieldName;
             public string FieldType;
             public string FieldValue;
-
             public static DataField Parse(string fieldEntry)
             {
                 var arr = fieldEntry.Split('~');
-
                 return new DataField
                 {
                     FieldName = arr[0],
@@ -212,12 +209,11 @@ namespace Workshop2022.TicketServiceClient
                 };
             }
         }
-
         public string User { get; set; }
         public string Campaign { get; set; }
         public string Telephone { get; set; }
         public DataField[] Data { get; set; }
-
+        public bool IsManual { get; set; }
     }
 
     public class AgentConnectProcessor : ReceivedMessageProcessorBase<AgentConnectMessage>
@@ -227,11 +223,11 @@ namespace Workshop2022.TicketServiceClient
             Map(f => f.User, "AN", typeof(string));
             Map(f => f.Campaign, "CN", typeof(string));
             Map(f => f.Telephone, "TN", typeof(string));
-
             //AS1\BT44699.046632\CB\TC\PT44699.046632
         }
 
-        public override bool Process(string header, IDictionary<string, string> attributes, out ReceivedMessageBase message)
+        public override bool Process(string header, IDictionary<string, string> attributes,
+            out ReceivedMessageBase message)
         {
             if (!base.Process(header, attributes, out message))
             {
@@ -243,18 +239,15 @@ namespace Workshop2022.TicketServiceClient
                 var data = attributes.ContainsKey("DT")
                     ? attributes["DT"]
                     : null;
-
                 var fields = data.Split(new[] {'|'}, options: StringSplitOptions.RemoveEmptyEntries);
-
                 Message.Data = fields.Select(AgentConnectMessage.DataField.Parse).ToArray();
-
+                // data call will include TC parameter
+                Message.IsManual = !attributes.ContainsKey("TC") && attributes.ContainsKey("FC");
                 message = Message;
-                
                 return true;
             }
             catch (Exception ex)
             {
-
             }
 
             return false;
