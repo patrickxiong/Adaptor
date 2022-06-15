@@ -152,7 +152,7 @@ namespace Workshop2022.TicketServiceClient
         public string Campaign { get; set; }
     }
 
-    public class AgentReadyProcessor : ReceivedMessageProcessorBase<AgentFreeMessage>
+    public class AgentReadyProcessor : ReceivedMessageProcessorBase<AgentReadyMessage>
     {
         public AgentReadyProcessor() : base("AR")
         {

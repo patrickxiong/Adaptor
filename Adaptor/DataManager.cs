@@ -9,7 +9,7 @@ namespace Adapter
 
         public DataManager()
         {
-            _entries.Add(new DataEntry { User = "User2004", Campaign = "tickets" });
+            _entries.Add(new DataEntry { User = "user2004", Campaign = "Tickets" });
         }
 
         public string GetCampaign(string user)

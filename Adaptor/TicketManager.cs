@@ -55,8 +55,21 @@ namespace Adapter
                 //    Status = e.IsValidated ? "Validated" : "Not-validated"
                 //});
 
-
-
+                if (e.IsValidated)
+                {
+                    _ticketServiceClient.Login(Session.UserId, "2004", _dataManager.GetCampaign(Session.UserId));
+                }
+                else
+                {
+                    OutEvents.Enqueue(new ErrorEvent()
+                    {
+                        SessionToken = _session.SessionToken,
+                        Event = "Error",
+                        User = e.UserId,
+                        Campaign = _dataManager.GetCampaign(Session.UserId),
+                        Expiry = DateTime.Now.AddSeconds(15)
+                    });
+                }
             };
 
             _ticketServiceClient.LoggedInEvent += (s, e) =>
@@ -70,6 +83,8 @@ namespace Adapter
                     Expiry = DateTime.Now.AddSeconds(15),
                     Status = "LoggedIn"
                 });
+
+                _ticketServiceClient.Available();
             };
 
             _ticketServiceClient.LoggedOutEvent += (s, e) =>
@@ -140,15 +155,16 @@ namespace Adapter
             _ticketServiceClient.TicketDataEvent += (s, e) =>
             {
                 var dataList = new List<DataFields>();
-                foreach (var d in e.Data)
-                {
-                    dataList.Add(new DataFields()
+                if (e.Data != null)
+                    foreach (var d in e.Data)
                     {
-                        Field = d.FieldName,
-                        Type = d.FieldType,
-                        Value = d.FieldValue
-                    });
-                }
+                        dataList.Add(new DataFields()
+                        {
+                            Field = d.FieldName,
+                            Type = d.FieldType,
+                            Value = d.FieldValue
+                        });
+                    }
 
                 OutEvents.Enqueue(new TicketDataEvent()
                 {
@@ -191,9 +207,7 @@ namespace Adapter
 
         public void Login(string userId, string password)
         {
-
-            //_ticketServiceClient.Login(userId, extension, campaign);
-
+            _ticketServiceClient.ValidateUser(userId, password);
         }
 
         public void Logout()
@@ -227,6 +241,12 @@ namespace Adapter
             }
 
             return false;
+        }
+
+        public void Dispose()
+        {
+            _ticketServiceClient?.Logout();
+            _ticketServiceClient?.Disconnect();
         }
     }
 }
