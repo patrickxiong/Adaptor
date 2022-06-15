@@ -28,7 +28,7 @@ namespace Adapter
 
         public void Dispose()
         {
-            //Todo: Dispose TicketManager
+            TicketManager.Disconnect();
         }
     }
 }

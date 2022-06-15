@@ -37,6 +37,11 @@ namespace Adapter
 
         public void ReleaseSession(string sessionToken)
         {
+            var session = GetSession(sessionToken);
+            if (session != null)
+            {
+                session.Dispose();
+            }
             _sessions.Remove(sessionToken);
         }
 
