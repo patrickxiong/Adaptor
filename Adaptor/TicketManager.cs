@@ -78,6 +78,7 @@ namespace Adapter
                     Status = "LoggedIn"
                 });
 
+                Session.State = UserState.LoggedIn;
                 _ticketServiceClient.Available();
             };
 
@@ -91,18 +92,7 @@ namespace Adapter
                     Campaign = e.Campaign,
                     Status = "LoggedOut"
                 });
-            };
-
-            _ticketServiceClient.LoggedOutEvent += (s, e) =>
-            {
-                Enqueue(new StatusChangeEvent()
-                {
-                    SessionToken = _session.SessionToken,
-                    Event = "LoggedOut",
-                    User = e.UserId,
-                    Campaign = e.Campaign,
-                    Status = "LoggedOut"
-                });
+                Session.State = UserState.LoggedOut;
             };
 
             _ticketServiceClient.AvailableEvent += (s, e) =>
@@ -113,8 +103,9 @@ namespace Adapter
                     Event = "Available",
                     User = e.UserId,
                     Campaign = e.Campaign,
-                    Status = "UserReady"
+                    Status = "Ready"
                 });
+                Session.State = UserState.Ready;
             };
 
             _ticketServiceClient.AgentFreeEvent += (s, e) =>
@@ -122,11 +113,13 @@ namespace Adapter
                 Enqueue(new StatusChangeEvent()
                 {
                     SessionToken = _session.SessionToken,
-                    Event = "AgentFree",
+                    Event = "OnBreak",
                     User = e.UserId,
                     Campaign = e.Campaign,
-                    Status = "BreakGranted"
+                    Status = "OnBreak"
                 });
+
+                Session.State = UserState.OnBreak;
             };
 
             _ticketServiceClient.CallEndedEvent += (s, e) =>
@@ -134,11 +127,13 @@ namespace Adapter
                 Enqueue(new StatusChangeEvent()
                 {
                     SessionToken = _session.SessionToken,
-                    Event = "CallEnded",
+                    Event = "OffCall",
                     User = e.UserId,
                     Campaign = e.Campaign,
-                    Status = "CallEnded"
+                    Status = "OffCall"
                 });
+
+                Session.State = UserState.OffCall;
             };
 
             _ticketServiceClient.TicketDataEvent += (s, e) =>
@@ -154,7 +149,6 @@ namespace Adapter
                             Value = d.FieldValue
                         });
                     }
-
                 Enqueue(new TicketDataEvent()
                 {
                     SessionToken = _session.SessionToken,
@@ -164,6 +158,34 @@ namespace Adapter
                     PhoneNumber = e.PhoneNumber,
                     Data = dataList
                 });
+
+                if (e.IsActiveCall)
+                {
+                    Enqueue(new StatusChangeEvent
+                    {
+                        SessionToken = _session.SessionToken,
+                        Event = "OnCall",
+                        User = e.UserId,
+                        Campaign = e.Campaign,
+                        Status = "OnCall"
+                    });
+
+                    Session.State = UserState.OnCall;
+                }
+                else
+                if (e.IsManualCall && Session.State== UserState.Dialling)
+                {
+                    Enqueue(new StatusChangeEvent
+                    {
+                        SessionToken = _session.SessionToken,
+                        Event = "OnCall",
+                        User = e.UserId,
+                        Campaign = e.Campaign,
+                        Status = "OnCall"
+                    });
+                    Session.State = UserState.OnCall;
+                }
+
             };
         }
 
@@ -205,6 +227,17 @@ namespace Adapter
 
         public void MakeCall(string phoneNumber)
         {
+            Enqueue(new StatusChangeEvent
+            {
+                SessionToken = _session.SessionToken,
+                Event = "Dialling",
+                User = Session.UserId,
+                Campaign = Session.Campaign,
+                Status = "Dialling"
+
+            });
+            Session.State = UserState.Dialling;
+
             _ticketServiceClient.MakeCall(phoneNumber);
         }
 
