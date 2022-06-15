@@ -67,7 +67,8 @@ namespace Adapter
                         Event = "Error",
                         User = e.UserId,
                         Campaign = _dataManager.GetCampaign(Session.UserId),
-                        Expiry = DateTime.Now.AddSeconds(15)
+                        Expiry = DateTime.Now.AddSeconds(15),
+                        ErrorMessage = e.ErrorMessage
                     });
                 }
             };
