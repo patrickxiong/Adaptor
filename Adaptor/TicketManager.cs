@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
 using Workshop2022.API.Models;
 using Workshop2022.TicketServiceClient;
 
@@ -20,11 +21,13 @@ namespace Adapter
 
         private readonly ITicketServiceClient _ticketServiceClient;
         private readonly IDataManager _dataManager;
+        private IConfiguration _configuration;
 
-        public TicketManager(ITicketServiceClient ticketServiceClient, IDataManager dataManager)
+        public TicketManager(ITicketServiceClient ticketServiceClient, IDataManager dataManager, IConfiguration configuration)
         {
             _ticketServiceClient = ticketServiceClient;
             _dataManager = dataManager;
+            _configuration = configuration;
             SubscribeToEvents();
         }
 
@@ -201,8 +204,9 @@ namespace Adapter
 
         public void Connect()
         {
-            _ticketServiceClient.Connect("172.25.12.79", "6502");
-            //ConfigurationManager.AppSettings["IP"], ConfigurationManager.AppSettings["Port"]
+            var ip = _configuration["ServiceHost:ip"];
+            var port = _configuration["ServiceHost:port"];
+            _ticketServiceClient.Connect(ip, port);
         }
 
         public void Disconnect()
