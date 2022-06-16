@@ -75,7 +75,7 @@ namespace Adapter
                 Enqueue(new StatusChangeEvent()
                 {
                     SessionToken = _session.SessionToken,
-                    Event = "LoggedIn",
+                    Event = "StatusChange",
                     User = e.UserId,
                     Campaign = e.Campaign,
                     Status = "LoggedIn"
@@ -90,7 +90,7 @@ namespace Adapter
                 Enqueue(new StatusChangeEvent()
                 {
                     SessionToken = _session.SessionToken,
-                    Event = "LoggedOut",
+                    Event = "StatusChange",
                     User = e.UserId,
                     Campaign = e.Campaign,
                     Status = "LoggedOut"
@@ -103,7 +103,7 @@ namespace Adapter
                 Enqueue(new StatusChangeEvent()
                 {
                     SessionToken = _session.SessionToken,
-                    Event = "Available",
+                    Event = "StatusChange",
                     User = e.UserId,
                     Campaign = e.Campaign,
                     Status = "Ready"
@@ -116,7 +116,7 @@ namespace Adapter
                 Enqueue(new StatusChangeEvent()
                 {
                     SessionToken = _session.SessionToken,
-                    Event = "OnBreak",
+                    Event = "StatusChange",
                     User = e.UserId,
                     Campaign = e.Campaign,
                     Status = "OnBreak"
@@ -130,7 +130,7 @@ namespace Adapter
                 Enqueue(new StatusChangeEvent()
                 {
                     SessionToken = _session.SessionToken,
-                    Event = "OffCall",
+                    Event = "StatusChange",
                     User = e.UserId,
                     Campaign = e.Campaign,
                     Status = "OffCall"
@@ -147,7 +147,8 @@ namespace Adapter
                     {
                         dataList.Add(new DataFields()
                         {
-                            Field = d.FieldName,
+                            // adjustment to UI mapping (not a part of the workshop task)
+                            Field = d.FieldName.Contains("Contact") ? "Name" : d.FieldName ,
                             Type = d.FieldType,
                             Value = d.FieldValue
                         });
@@ -167,7 +168,7 @@ namespace Adapter
                     Enqueue(new StatusChangeEvent
                     {
                         SessionToken = _session.SessionToken,
-                        Event = "OnCall",
+                        Event = "StatusChange",
                         User = e.UserId,
                         Campaign = e.Campaign,
                         Status = "OnCall"
@@ -234,7 +235,7 @@ namespace Adapter
             Enqueue(new StatusChangeEvent
             {
                 SessionToken = _session.SessionToken,
-                Event = "Dialling",
+                Event = "StatusChange",
                 User = Session.UserId,
                 Campaign = Session.Campaign,
                 Status = "Dialling"
