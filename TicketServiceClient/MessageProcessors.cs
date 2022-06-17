@@ -177,6 +177,21 @@ namespace Workshop2022.TicketServiceClient
         }
     }
 
+    public class NumberBackMessage : ReceivedMessageBase
+    {
+        public string User { get; set; }
+        public string Campaign { get; set; }
+    }
+
+    public class NumberBackProcessor : ReceivedMessageProcessorBase<NumberBackMessage>
+    {
+        public NumberBackProcessor() : base("NB")
+        {
+            Map(f => f.User, "AN", typeof(string));
+            Map(f => f.Campaign, "CN", typeof(string));
+        }
+    }
+
     public class AvailableMessage : ReceivedMessageBase
     {
         public string User { get; set; }
@@ -246,12 +261,15 @@ namespace Workshop2022.TicketServiceClient
                     ? attributes["DT"]
                     : null;
 
-                var fields = data.Split(new[] {'|'}, options: StringSplitOptions.RemoveEmptyEntries);
-
-                Message.Data = fields.Select(AgentConnectMessage.DataField.Parse).ToArray();
-
                 // data call will include TC parameter
                 Message.IsManual = !attributes.ContainsKey("TC") && attributes.ContainsKey("FC");
+                // Fix - temp - manual call reply
+                if (data != null)
+                {
+                    var fields = data.Split(new[] { '|' }, options: StringSplitOptions.RemoveEmptyEntries);
+
+                    Message.Data = fields.Select(AgentConnectMessage.DataField.Parse).ToArray();
+                }
 
                 message = Message;
                 

@@ -118,6 +118,9 @@ namespace Workshop2022.TicketServiceClient
                 .Attribute("AN", _user)
                 .Attribute("CN", _campaign)
                 .Attribute("TN", phoneNumber)
+                // Fix temp only - make SI unique
+                .Attribute("SI", $"{phoneNumber.Trim()}{DateTime.Now:yyyyMMddHHmmss}")
+                .Attribute("FC")
                 .Attribute("TD", _tenant)
                 .Build();
 
@@ -176,6 +179,7 @@ namespace Workshop2022.TicketServiceClient
             _messageProcessor.RegisterMessageProcessor(new AgentReadyProcessor(), OnAgentReady);
             _messageProcessor.RegisterMessageProcessor(new AgentFreeProcessor(), OnAgentFree);
             _messageProcessor.RegisterMessageProcessor(new CallEndedProcessor(), OnCallEnded);
+            _messageProcessor.RegisterMessageProcessor(new NumberBackProcessor(), OnNumberBack);
 
             _messageProcessor.RegisterMessageProcessor(new AgentConnectProcessor(), OnAgentConnect);
         }
@@ -301,6 +305,22 @@ namespace Workshop2022.TicketServiceClient
             };
 
              CallEndedEvent?.Invoke(this, response);
+        }
+
+        private void OnNumberBack(ReceivedMessageBase message)
+        {
+            var casted = message as NumberBackMessage;
+
+            // Number back -> call was not connected, from a client perspective (of this exercise) ended
+            var response = new CallEndedResponse()
+            {
+                UserId = casted.User,
+                Campaign = casted.Campaign,
+                Tenant = _tenant
+            };
+
+            // Same response as CE
+            CallEndedEvent?.Invoke(this, response);
         }
 
         private void OnAgentConnect(ReceivedMessageBase message)

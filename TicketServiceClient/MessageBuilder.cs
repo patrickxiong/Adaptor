@@ -28,9 +28,16 @@ namespace Workshop2022.TicketServiceClient
             return this;
         }
 
-        public IMessageBuilder Attribute(string key, object value)
+        public IMessageBuilder Attribute(string key, object value = null)
         {
-            _builder.AppendFormat("\\{0}{1}", key, value);
+            if (value is null) 
+            {
+                _builder.AppendFormat("\\{0}", key);
+            }
+            else
+            {
+                _builder.AppendFormat("\\{0}{1}", key, value);
+            }
 
             return this;
         }
